@@ -8,17 +8,17 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let a of bothPureAndPalindrome" class="purePalindrome">
+            <tr *ngFor="let a of bothPureAndPalindrome$" class="purePalindrome">
                 <td>{{a.text}}</td>
                 <td>{{a.is_pure_palindrome}}</td>
                 <td>{{a.is_palindrome}}</td>
             </tr>
-            <tr *ngFor="let a of onlyPalindrome " class="onlyPalindrome">
+            <tr *ngFor="let a of onlyPalindrome$ " class="onlyPalindrome">
                 <td>{{a.text}}</td>
                 <td>{{a.is_pure_palindrome}}</td>
                 <td>{{a.is_palindrome}}</td>
             </tr>
-            <tr *ngFor="let a of notPalindrome ">
+            <tr *ngFor="let a of notPalindrome$ ">
                 <td>{{a.text}}</td>
                 <td>{{a.is_pure_palindrome}}</td>
                 <td>{{a.is_palindrome}}</td>
@@ -26,8 +26,4 @@
 
         </tbody>
     </table>
-</div>
-
-<div>
-    <button type="button" class="btn btn-outline-primary" (click)="postData()">Send Post Request</button>
 </div>
