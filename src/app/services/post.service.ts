@@ -1,5 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ResponseModel } from '../models/response-model';
+
 
 @Injectable({
     providedIn: 'root'
@@ -7,16 +10,11 @@ import { Injectable } from '@angular/core';
 export class PostService {
 
     constructor(private http: HttpClient) { }
-    postData() {
+    postData(payload: any): Observable<ResponseModel[]> {
 
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
         const url = 'https://7iza7s43oc.execute-api.us-east-1.amazonaws.com/new';
-        const data = {
-            content: ["racecar",
-                "A man, a plan, a canal: Panama.",
-                "A test"]
-        };
 
-        return this.http.post(url, JSON.stringify(data), { headers: headers });
+        return this.http.post<ResponseModel[]>(url, JSON.stringify(payload), { headers: headers });
     }
 }
