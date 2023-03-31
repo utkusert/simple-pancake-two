@@ -15,6 +15,6 @@ export class PostService {
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
         const url = 'https://7iza7s43oc.execute-api.us-east-1.amazonaws.com/new';
 
-        return this.http.post<ResponseModel[]>(url, JSON.stringify(payload), { headers: headers });
+        return this.http.post<ResponseModel[]>(url, payload, { headers: headers });
     }
 }

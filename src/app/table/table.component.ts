@@ -17,10 +17,7 @@ export class TableComponent implements OnInit {
   bothPureAndPalindrome$: ResponseModel[] = [];
   onlyPalindrome$: ResponseModel[] = [];
   notPalindrome$: ResponseModel[] = [];
-
-  private bothPureAndPalindromeSub: Subscription = new Subscription();
-  private onlyPalindromeSub: Subscription = new Subscription();
-  private notPalindromeSub: Subscription = new Subscription();
+  private subscription: Subscription[] = [];
 
 
   constructor(private store: Store<AppState>) {
@@ -33,21 +30,26 @@ export class TableComponent implements OnInit {
         "A test"]
     };
     this.store.dispatch(postRequest({ payload }));
-
-    this.bothPureAndPalindromeSub = this.store.select(state => state.post.bothPureAndPalindrome).subscribe(data => {
-      this.bothPureAndPalindrome$ = data;
-    });
-    this.onlyPalindromeSub = this.store.select(state => state.post.onlyPalindrome).subscribe(data => {
-      this.onlyPalindrome$ = data;
-    });
-    this.notPalindromeSub = this.store.select(state => state.post.notPalindrome).subscribe(data => {
-      this.notPalindrome$ = data;
-    });
+    this.onSub();
   }
   ngOnDestroy(): void {
-    this.bothPureAndPalindromeSub.unsubscribe();
-    this.onlyPalindromeSub.unsubscribe();
-    this.notPalindromeSub.unsubscribe();
+    this.subscription.forEach(subscription => subscription.unsubscribe())
+  }
+
+  onSub() {
+    this.subscription = [
+      this.store.select(state => state.post.bothPureAndPalindrome).subscribe(data => {
+        this.bothPureAndPalindrome$ = data;
+      }),
+      this.store.select(state => state.post.onlyPalindrome).subscribe(data => {
+        this.onlyPalindrome$ = data;
+      }),
+      this.store.select(state => state.post.notPalindrome).subscribe(data => {
+        this.notPalindrome$ = data;
+      })
+
+    ]
+
   }
 
 }
