@@ -5,7 +5,6 @@ import { of } from 'rxjs';
 import { PostService } from '../services/post.service';
 import { postFailure, postRequest, postSuccess } from './action-store';
 
-
 @Injectable()
 export class PostEffects {
 

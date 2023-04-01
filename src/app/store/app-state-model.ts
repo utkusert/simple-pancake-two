@@ -7,6 +7,5 @@ export interface AppState {
         onlyPalindrome: ResponseModel[],
         notPalindrome: ResponseModel[],
         error?: any
-
     }
 }
