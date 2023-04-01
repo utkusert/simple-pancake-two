@@ -5,8 +5,6 @@ import { ResponseModel } from 'src/app/models/response-model';
 import { postRequest } from 'src/app/store/action-store';
 import { AppState } from 'src/app/store/app-state-model';
 
-
-
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -14,11 +12,23 @@ import { AppState } from 'src/app/store/app-state-model';
 })
 export class TableComponent implements OnInit {
 
-  bothPureAndPalindrome$: ResponseModel[] = [];
-  onlyPalindrome$: ResponseModel[] = [];
-  notPalindrome$: ResponseModel[] = [];
+  bothPureAndPalindromeSub: ResponseModel[] = [];
+  onlyPalindromeSub: ResponseModel[] = [];
+  notPalindromeSub: ResponseModel[] = [];
   private subscription: Subscription[] = [];
-
+  private getSubscriptions(): Subscription[] {
+    return [
+      this.store.select(state => state.post.bothPureAndPalindrome).subscribe(data => {
+        this.bothPureAndPalindromeSub = data;
+      }),
+      this.store.select(state => state.post.onlyPalindrome).subscribe(data => {
+        this.onlyPalindromeSub = data;
+      }),
+      this.store.select(state => state.post.notPalindrome).subscribe(data => {
+        this.notPalindromeSub = data;
+      })
+    ];
+  }
 
   constructor(private store: Store<AppState>) {
   }
@@ -30,26 +40,10 @@ export class TableComponent implements OnInit {
         "A test"]
     };
     this.store.dispatch(postRequest({ payload }));
-    this.onSub();
+    this.subscription = this.getSubscriptions();
   }
   ngOnDestroy(): void {
     this.subscription.forEach(subscription => subscription.unsubscribe())
-  }
-
-  onSub() {
-    this.subscription = [
-      this.store.select(state => state.post.bothPureAndPalindrome).subscribe(data => {
-        this.bothPureAndPalindrome$ = data;
-      }),
-      this.store.select(state => state.post.onlyPalindrome).subscribe(data => {
-        this.onlyPalindrome$ = data;
-      }),
-      this.store.select(state => state.post.notPalindrome).subscribe(data => {
-        this.notPalindrome$ = data;
-      })
-
-    ]
-
   }
 
 }

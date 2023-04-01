@@ -3,7 +3,6 @@ import { ResponseModel } from '../models/response-model';
 import { postFailure, postSuccess } from './action-store';
 import { AppState } from './app-state-model';
 
-
 export const initialState: AppState['post'] = {
     bothPureAndPalindrome: [],
     onlyPalindrome: [],
